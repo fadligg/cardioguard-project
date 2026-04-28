@@ -5,11 +5,18 @@ import numpy as np
 import datetime
 import os
 
-# data
-X_train = pd.read_csv('../data/X_train_scaled.csv').values
-y_train = pd.read_csv('../data/y_train.csv').values
-X_test = pd.read_csv('../data/X_test_scaled.csv').values
-y_test = pd.read_csv('../data/y_test.csv').values
+# prepare path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+base_ai_dir = os.path.join(current_dir, "..") # folder ai-engineering/
+
+def get_path(folder, filename):
+    return os.path.abspath(os.path.join(base_ai_dir, folder, filename))
+
+# tambahkan .astype('float32') agar ramah bagi TensorFlow
+X_train = pd.read_csv(get_path('data', 'X_train_scaled.csv')).values.astype('float32')
+y_train = pd.read_csv(get_path('data', 'y_train.csv')).values.astype('float32')
+X_test = pd.read_csv(get_path('data', 'X_test_scaled.csv')).values.astype('float32')
+y_test = pd.read_csv(get_path('data', 'y_test.csv')).values.astype('float32')
 
 # arsitektur model (Functional API)
 def build_model(input_shape):
@@ -77,5 +84,6 @@ for epoch in range(epochs):
     val_acc_metric.reset_state()
 
 # save model
-model.save('../models/cardioguard_model.keras')
-print("\nTraining selesai! Model disimpan di folder 'ai-engineering/models/cardioguard_model.keras'")
+save_path = get_path('models', 'cardioguard_model.keras')
+model.save(save_path)
+print(f"\nTraining selesai! Model disimpan di: {save_path}")
