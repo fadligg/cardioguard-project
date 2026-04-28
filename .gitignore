@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Model Files (Opsional: jika filenya sangat besar, gunakan Git LFS)
+# *.keras
+# *.h5
+
+# Node.js
+node_modules/
+dist/
+.DS_Store
+
+# Data
+# data/raw/*.csv
